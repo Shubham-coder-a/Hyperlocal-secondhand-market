@@ -5,8 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hyperiocal Market — Buy &amp; Sell Locally</title>
-    <meta name="description"
-        content="Hyperiocal is a student-built hyperlocal secondhand marketplace. Buy and sell items near your campus using geolocation." />
+    <meta name="description" content="Student-built hyperlocal secondhand marketplace using Geolocation." />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
@@ -124,8 +123,7 @@
             font-weight: 600;
             cursor: pointer;
             border: none;
-            transition: all .25s;
-            text-decoration: none
+            transition: all .25s
         }
 
         .btn-ghost {
@@ -163,23 +161,6 @@
 
         .btn-icon:hover {
             background: rgba(255, 255, 255, .2)
-        }
-
-        .nav-chip {
-            background: rgba(52, 211, 153, .15);
-            color: var(--g400);
-            border: 1px solid rgba(52, 211, 153, .3);
-            padding: 5px 12px;
-            border-radius: 99px;
-            font-size: .75rem;
-            font-weight: 600;
-            display: none
-        }
-
-        .nav-chip.show {
-            display: flex;
-            align-items: center;
-            gap: 5px
         }
 
         /* HERO */
@@ -415,7 +396,7 @@
             box-shadow: 0 4px 12px rgba(16, 185, 129, .3)
         }
 
-        /* HEADER */
+        /* SECTION HEADER */
         .sec-hdr {
             display: flex;
             align-items: center;
@@ -455,57 +436,6 @@
             padding-bottom: 60px
         }
 
-        /* SKELETON */
-        .skeleton-card {
-            background: var(--surface);
-            border-radius: var(--r);
-            border: 1px solid var(--border);
-            overflow: hidden
-        }
-
-        .skel {
-            background: linear-gradient(90deg, var(--border) 25%, var(--g50) 50%, var(--border) 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.3s infinite;
-            border-radius: 8px
-        }
-
-        @keyframes shimmer {
-            0% {
-                background-position: 200% 0
-            }
-
-            100% {
-                background-position: -200% 0
-            }
-        }
-
-        .skel-img {
-            height: 180px;
-            border-radius: 0
-        }
-
-        .skel-body {
-            padding: 14px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px
-        }
-
-        .skel-line {
-            height: 14px
-        }
-
-        .skel-line.sm {
-            height: 10px;
-            width: 60%
-        }
-
-        .skel-line.btn {
-            height: 36px;
-            margin-top: 6px
-        }
-
         /* CARD */
         .card {
             background: var(--surface);
@@ -526,26 +456,10 @@
             position: relative;
             height: 180px;
             background: var(--g50);
-            overflow: hidden
-        }
-
-        .card-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform .4s
-        }
-
-        .card:hover .card-img img {
-            transform: scale(1.06)
-        }
-
-        .card-img .img-ph {
-            width: 100%;
-            height: 100%;
             display: grid;
             place-items: center;
-            font-size: 3.5rem
+            font-size: 3.5rem;
+            overflow: hidden
         }
 
         .dist-badge {
@@ -629,10 +543,7 @@
         .card-name {
             font-size: .93rem;
             font-weight: 600;
-            line-height: 1.3;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis
+            line-height: 1.3
         }
 
         .card-loc {
@@ -739,7 +650,7 @@
             max-width: 440px;
             width: 100%;
             position: relative;
-            animation: slideUp .25s
+            animation: slideUp .25s ease
         }
 
         @keyframes slideUp {
@@ -865,6 +776,7 @@
             }
         }
 
+        /* FOOTER */
         footer {
             background: var(--g900);
             color: rgba(255, 255, 255, .7);
@@ -877,63 +789,29 @@
             color: var(--g400);
             font-weight: 600
         }
-
-        /* TOAST */
-        .toast {
-            position: fixed;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%) translateY(20px);
-            background: var(--g900);
-            color: #fff;
-            padding: 11px 22px;
-            border-radius: 99px;
-            font-size: .84rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, .25);
-            z-index: 3000;
-            opacity: 0;
-            transition: opacity .3s, transform .3s
-        }
-
-        .toast.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0)
-        }
     </style>
 </head>
 
 <body data-theme="light">
 
+    <!-- NAVBAR -->
     <nav class="navbar">
         <div class="nav-inner">
             <a href="index.html" class="brand">
-                <div class="brand-icon"><i class="fa-solid fa-leaf"></i></div>Hyperiocal
+                <div class="brand-icon"><i class="fa-solid fa-leaf"></i></div>
+                Hyperiocal
             </a>
             <div class="nav-actions">
                 <button class="btn-icon" onclick="toggleTheme()" id="themeBtn" title="Toggle theme"><i
                         class="fa-solid fa-moon"></i></button>
-                <!-- Shown when NOT logged in -->
-                <a href="login.html" class="btn btn-ghost auth-guest"><i class="fa-solid fa-right-to-bracket"></i>
-                    Login</a>
-                <a href="register.html" class="btn btn-ghost auth-guest"><i class="fa-solid fa-user-plus"></i>
-                    Register</a>
-                <!-- Shown when logged in -->
-                <span class="nav-chip auth-user" id="navChip"><i class="fa-solid fa-circle-user"></i><span
-                        id="navName"></span></span>
-                <a href="my-products.html" class="btn btn-ghost auth-user" style="display:none"><i
-                        class="fa-solid fa-list"></i> My Listings</a>
-                <button class="btn btn-ghost auth-user" id="logoutBtn" style="display:none"><i
-                        class="fa-solid fa-right-from-bracket"></i> Logout</button>
-                <!-- Always visible -->
+                <a href="login.html" class="btn btn-ghost"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+                <a href="register.html" class="btn btn-ghost"><i class="fa-solid fa-user-plus"></i> Register</a>
                 <a href="add-product.html" class="btn btn-sell"><i class="fa-solid fa-plus"></i> Sell Item</a>
             </div>
         </div>
     </nav>
 
+    <!-- HERO -->
     <section class="hero">
         <h1>Your Campus <span>Secondhand</span><br>Marketplace</h1>
         <p>Buy &amp; sell preloved items from students near you. Sustainable. Local. Instant.</p>
@@ -944,22 +822,23 @@
         </div>
     </section>
 
+    <!-- SEARCH -->
     <div class="search-wrap">
         <div class="search-card">
             <div class="search-iw">
                 <i class="fa-solid fa-magnifying-glass"></i>
                 <input type="text" id="searchInput" class="search-input" placeholder="Search laptops, books, furniture…"
-                    oninput="renderProducts()" />
+                    oninput="render()" />
             </div>
-            <button class="btn-search" onclick="renderProducts()"><i class="fa-solid fa-magnifying-glass"></i>
-                Search</button>
+            <button class="btn-search" onclick="render()"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
         </div>
     </div>
 
+    <!-- STATS -->
     <div class="stats-bar">
         <div class="stats-inner">
             <div>
-                <div class="stat-val" id="totalCount">—</div>
+                <div class="stat-val">240+</div>
                 <div class="stat-lbl">Active Listings</div>
             </div>
             <div>
@@ -977,6 +856,7 @@
         </div>
     </div>
 
+    <!-- FILTERS + GRID -->
     <div class="section">
         <div class="filters-row" id="filterRow">
             <span class="f-label">Filter:</span>
@@ -997,7 +877,7 @@
         </div>
         <div class="sec-hdr">
             <h2 class="sec-title">Nearby Listings <span id="cnt"></span></h2>
-            <select class="sort-sel" id="sortSel" onchange="renderProducts()">
+            <select class="sort-sel" id="sortSel" onchange="render()">
                 <option value="distance">Sort: Nearest First</option>
                 <option value="price-asc">Price: Low → High</option>
                 <option value="price-desc">Price: High → Low</option>
@@ -1009,7 +889,6 @@
 
     <footer>© 2026 <span>Hyperiocal Market</span> · Built with 💚 by Shubham · Sustainable Local Commerce</footer>
     <button class="fab" onclick="location.href='add-product.html'"><i class="fa-solid fa-plus"></i> Sell Item</button>
-    <div class="toast" id="toast"></div>
 
     <!-- CONTACT MODAL -->
     <div class="modal-ov" id="modal" onclick="closeModal(event)">
@@ -1046,178 +925,100 @@
         </div>
     </div>
 
-    <script type="module">
-        import { auth, db } from "./firebase-config.js";
-        import { onAuthStateChanged, signOut }
-            from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { collection, onSnapshot, query, orderBy }
-            from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    <script>
+        const products = [
+            { id: 1, name: "Dell Inspiron 15 Laptop", cat: "electronics", emoji: "💻", price: 18500, dist: 0.4, loc: "Waluj, Sambhajinagar", seller: "Rahul S.", phone: "9876543210", date: 5 },
+            { id: 2, name: "Gaming Laptop RTX 3060", cat: "electronics", emoji: "🎮", price: 42000, dist: 1.1, loc: "MGMU Campus", seller: "Aryan K.", phone: "9123456780", date: 2 },
+            { id: 3, name: "Comfortable Office Chair", cat: "furniture", emoji: "🪑", price: 3200, dist: 0.8, loc: "Cidco Colony", seller: "Priya M.", phone: "9988776655", date: 8 },
+            { id: 4, name: "Study Table with Shelf", cat: "furniture", emoji: "🪵", price: 4500, dist: 2.3, loc: "Aurangabad Satara", seller: "Sneha R.", phone: "9112233445", date: 1 },
+            { id: 5, name: "Mountain Bicycle 21-Speed", cat: "vehicles", emoji: "🚲", price: 8000, dist: 1.5, loc: "Garkheda", seller: "Raj T.", phone: "9012345678", date: 6 },
+            { id: 6, name: "Honda Activa 5G Scooty", cat: "vehicles", emoji: "🛵", price: 52000, dist: 3.2, loc: "Bajajnagar", seller: "Vikram P.", phone: "9765432100", date: 3 },
+            { id: 7, name: "iPhone 12 128GB", cat: "electronics", emoji: "📱", price: 31000, dist: 0.6, loc: "Chhatrapati Sq.", seller: "Nisha G.", phone: "9654321098", date: 7 },
+            { id: 8, name: "Samsung 43\" Smart TV", cat: "electronics", emoji: "📺", price: 22000, dist: 4.1, loc: "Osmanpura", seller: "Karan J.", phone: "9543210987", date: 9 },
+            { id: 9, name: "JEE Advanced Books Set", cat: "books", emoji: "📚", price: 1200, dist: 0.3, loc: "MIT College", seller: "Anil B.", phone: "9432109876", date: 4 },
+            { id: 10, name: "Air Cooler Bajaj 36L", cat: "electronics", emoji: "❄️", price: 5500, dist: 2.8, loc: "Waluj Estate", seller: "Deepa N.", phone: "9321098765", date: 10 },
+            { id: 11, name: "Cricket Bat + Pads Set", cat: "sports", emoji: "🏏", price: 2400, dist: 1.9, loc: "Krida Mandal", seller: "Suresh V.", phone: "9210987654", date: 11 },
+            { id: 12, name: "Bluetooth Speaker JBL", cat: "electronics", emoji: "🔊", price: 3800, dist: 0.9, loc: "College Road", seller: "Pooja L.", phone: "9109876543", date: 12 },
+            { id: 13, name: "Engineering Drawing Set", cat: "books", emoji: "📐", price: 800, dist: 0.2, loc: "COEP Hostel", seller: "Mohit C.", phone: "9876512340", date: 13 },
+            { id: 14, name: "Yoga Mat + Resistance Band", cat: "sports", emoji: "🧘", price: 950, dist: 1.3, loc: "Samarth Colony", seller: "Rina S.", phone: "9765423110", date: 14 },
+            { id: 15, name: "Denim Jacket (Size L)", cat: "clothing", emoji: "🧥", price: 600, dist: 0.7, loc: "Prozone Mall Area", seller: "Tara F.", phone: "9654332200", date: 15 },
+            { id: 16, name: "Wooden Bed Teak Queen", cat: "furniture", emoji: "🛏️", price: 12000, dist: 5.0, loc: "Beed Bypass", seller: "Ajay H.", phone: "9543221100", date: 16 },
+        ];
 
-        // ─── THEME ───────────────────────────────────────────
-        window.toggleTheme = () => {
+        let activeCat = "all", wishlist = new Set();
+
+        function toggleTheme() {
             const b = document.body, dark = b.getAttribute("data-theme") === "dark";
             b.setAttribute("data-theme", dark ? "light" : "dark");
             document.getElementById("themeBtn").innerHTML = dark ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
-        };
+        }
 
-        // ─── AUTH STATE ──────────────────────────────────────
-        onAuthStateChanged(auth, user => {
-            document.querySelectorAll(".auth-guest").forEach(el => el.style.display = user ? "none" : "");
-            document.querySelectorAll(".auth-user").forEach(el => el.style.display = user ? "" : "none");
-            if (user) {
-                document.getElementById("navName").textContent = user.displayName || user.email;
-                document.getElementById("navChip").classList.add("show");
-            }
-        });
-        document.getElementById("logoutBtn").addEventListener("click", async () => {
-            await signOut(auth);
-            showToast("Logged out successfully.");
-        });
-
-        // ─── GEOLOCATION ─────────────────────────────────────
-        let userLat = null, userLon = null;
-        window.retryLoc = () => { document.getElementById("userLocation").textContent = "Detecting…"; getLoc(); };
+        function retryLoc() { document.getElementById("userLocation").textContent = "Detecting…"; getLoc(); }
         function getLoc() {
             if (!navigator.geolocation) { document.getElementById("userLocation").textContent = "📍 Sambhajinagar, MH"; return; }
             navigator.geolocation.getCurrentPosition(
-                p => {
-                    userLat = p.coords.latitude; userLon = p.coords.longitude;
-                    document.getElementById("userLocation").textContent = `Lat ${userLat.toFixed(4)}, Lon ${userLon.toFixed(4)} — Active`;
-                    renderProducts();
-                },
-                () => { document.getElementById("userLocation").textContent = "📍 Sambhajinagar, Maharashtra"; }
+                p => document.getElementById("userLocation").textContent = `Lat ${p.coords.latitude.toFixed(4)}, Lon ${p.coords.longitude.toFixed(4)} — Active`,
+                () => document.getElementById("userLocation").textContent = "📍 Sambhajinagar, Maharashtra"
             );
         }
         getLoc();
 
-        // ─── HAVERSINE DISTANCE ───────────────────────────────
-        function haversine(lat1, lon1, lat2, lon2) {
-            const R = 6371, dLat = (lat2 - lat1) * Math.PI / 180, dLon = (lon2 - lon1) * Math.PI / 180;
-            const a = Math.sin(dLat / 2) ** 2 + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon / 2) ** 2;
-            return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        }
-
-        // ─── SKELETON ─────────────────────────────────────────
-        function showSkeletons() {
-            document.getElementById("grid").innerHTML = Array(8).fill(`
-      <div class="skeleton-card">
-        <div class="skel skel-img"></div>
-        <div class="skel-body">
-          <div class="skel skel-line"></div>
-          <div class="skel skel-line sm"></div>
-          <div class="skel skel-line sm"></div>
-          <div class="skel skel-line btn"></div>
-        </div>
-      </div>`).join("");
-        }
-
-        // ─── FIRESTORE REAL-TIME ──────────────────────────────
-        let allProducts = [];
-        const catEmoji = { electronics: "💻", furniture: "🪑", books: "📚", clothing: "👗", vehicles: "🚲", sports: "🏏", other: "📦" };
-        showSkeletons();
-
-        const q = query(collection(db, "products"), orderBy("createdAt", "desc"));
-        onSnapshot(q, snap => {
-            allProducts = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-            document.getElementById("totalCount").textContent = allProducts.length;
-            renderProducts();
-        }, err => {
-            document.getElementById("grid").innerHTML = `<div class="empty"><i class="fa-solid fa-triangle-exclamation"></i><h3>Could not load listings</h3><p>Check your Firebase config or connection.</p></div>`;
-            console.error(err);
-        });
-
-        // ─── FILTER & SORT ────────────────────────────────────
-        let activeCat = "all", wishlist = new Set();
-        window.setFilter = el => {
+        function setFilter(el) {
             document.querySelectorAll(".pill").forEach(p => p.classList.remove("active"));
-            el.classList.add("active"); activeCat = el.getAttribute("data-cat"); renderProducts();
-        };
+            el.classList.add("active"); activeCat = el.getAttribute("data-cat"); render();
+        }
 
-        window.renderProducts = () => {
+        function render() {
             const q = document.getElementById("searchInput").value.toLowerCase();
             const s = document.getElementById("sortSel").value;
-
-            let list = allProducts.filter(p => {
-                const catOk = activeCat === "all" || p.category === activeCat;
-                const txtOk = !q || (p.name || "").toLowerCase().includes(q) || (p.category || "").includes(q);
+            let list = products.filter(p => {
+                const catOk = activeCat === "all" || p.cat === activeCat;
+                const txtOk = !q || p.name.toLowerCase().includes(q) || p.cat.includes(q);
                 return catOk && txtOk;
             });
-
-            // add computed distance
-            list = list.map(p => ({
-                ...p,
-                dist: (userLat && p.lat) ? haversine(userLat, userLon, p.lat, p.lon) : null
-            }));
-
             if (s === "price-asc") list.sort((a, b) => a.price - b.price);
             if (s === "price-desc") list.sort((a, b) => b.price - a.price);
-            if (s === "newest") list.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
-            if (s === "distance") list.sort((a, b) => (a.dist ?? 999) - (b.dist ?? 999));
-
+            if (s === "distance") list.sort((a, b) => a.dist - b.dist);
+            if (s === "newest") list.sort((a, b) => a.date - b.date);
             document.getElementById("cnt").textContent = `(${list.length})`;
             const g = document.getElementById("grid");
-
             if (!list.length) {
-                g.innerHTML = `<div class="empty"><i class="fa-solid fa-box-open"></i><h3>No listings found</h3><p>Try a different search or category.</p></div>`;
-                return;
+                g.innerHTML = '<div class="empty"><i class="fa-solid fa-box-open"></i><h3>No listings found</h3><p>Try a different search or category.</p></div>'; return;
             }
+            g.innerHTML = list.map(p => `
+    <div class="card">
+      <div class="card-img">
+        ${p.emoji}
+        <span class="dist-badge"><i class="fa-solid fa-location-dot"></i> ${p.dist} km</span>
+        <span class="cat-badge">${p.cat}</span>
+        <button class="wish-btn ${wishlist.has(p.id) ? "on" : ""}" onclick="toggleWish(event,${p.id})"><i class="fa-${wishlist.has(p.id) ? "solid" : "regular"} fa-heart"></i></button>
+      </div>
+      <div class="card-body">
+        <div class="card-price">₹${p.price.toLocaleString("en-IN")}</div>
+        <div class="card-name">${p.name}</div>
+        <div class="card-loc"><i class="fa-solid fa-location-dot"></i> ${p.loc}</div>
+        <button class="btn-contact" onclick="openModal(${p.id})"><i class="fa-solid fa-phone"></i> Contact Seller</button>
+      </div>
+    </div>`).join("");
+        }
 
-            g.innerHTML = list.map(p => {
-                const distTxt = p.dist != null ? `${p.dist.toFixed(1)} km` : "— km";
-                const img = p.imageUrl
-                    ? `<img src="${p.imageUrl}" alt="${p.name}" loading="lazy"/>`
-                    : `<div class="img-ph">${catEmoji[p.category] || "📦"}</div>`;
-                return `
-        <div class="card">
-          <div class="card-img">
-            ${img}
-            <span class="dist-badge"><i class="fa-solid fa-location-dot"></i> ${distTxt}</span>
-            <span class="cat-badge">${p.category || "other"}</span>
-            <button class="wish-btn ${wishlist.has(p.id) ? "on" : ""}" onclick="toggleWish(event,'${p.id}')">
-              <i class="fa-${wishlist.has(p.id) ? "solid" : "regular"} fa-heart"></i>
-            </button>
-          </div>
-          <div class="card-body">
-            <div class="card-price">₹${(p.price || 0).toLocaleString("en-IN")}</div>
-            <div class="card-name" title="${p.name}">${p.name}</div>
-            <div class="card-loc"><i class="fa-solid fa-location-dot"></i>${p.location || "—"}</div>
-            <button class="btn-contact" onclick='openModal(${JSON.stringify({ id: p.id, name: p.name, seller: p.sellerName, phone: p.sellerPhone, loc: p.location, price: p.price })})'>
-              <i class="fa-solid fa-phone"></i> Contact Seller
-            </button>
-          </div>
-        </div>`;
-            }).join("");
-        };
+        function toggleWish(e, id) { e.stopPropagation(); wishlist.has(id) ? wishlist.delete(id) : wishlist.add(id); render(); }
 
-        // ─── WISHLIST ────────────────────────────────────────
-        window.toggleWish = (e, id) => {
-            e.stopPropagation();
-            wishlist.has(id) ? wishlist.delete(id) : wishlist.add(id);
-            renderProducts();
-            showToast(wishlist.has(id) ? "❤️ Added to wishlist" : "Removed from wishlist");
-        };
-
-        // ─── CONTACT MODAL ───────────────────────────────────
-        window.openModal = (p) => {
+        function openModal(id) {
+            const p = products.find(x => x.id === id);
             document.getElementById("mName").textContent = p.name;
-            document.getElementById("mSeller").textContent = p.seller || "—";
-            document.getElementById("mPhone").textContent = p.phone || "Contact via WhatsApp";
-            document.getElementById("mLoc").textContent = p.loc || "—";
-            document.getElementById("mPrice").textContent = "₹" + (p.price || 0).toLocaleString("en-IN");
-            document.getElementById("waBtn").onclick = () =>
-                window.open(`https://wa.me/91${p.phone}?text=Hi, I'm interested in your "${p.name}" listed on Hyperiocal.`, "_blank");
+            document.getElementById("mSeller").textContent = p.seller;
+            document.getElementById("mPhone").textContent = p.phone;
+            document.getElementById("mLoc").textContent = p.loc;
+            document.getElementById("mPrice").textContent = "₹" + p.price.toLocaleString("en-IN");
+            document.getElementById("waBtn").onclick = () => window.open(`https://wa.me/91${p.phone}?text=Hi, I'm interested in your "${p.name}" listed on Hyperiocal.`, "_blank");
             document.getElementById("modal").classList.add("open");
             document.body.style.overflow = "hidden";
-        };
-        window.closeModal = e => { if (e.target === document.getElementById("modal")) closeModalDirect(); };
-        window.closeModalDirect = () => { document.getElementById("modal").classList.remove("open"); document.body.style.overflow = ""; };
-        document.addEventListener("keydown", e => { if (e.key === "Escape") closeModalDirect(); });
-
-        // ─── TOAST ───────────────────────────────────────────
-        function showToast(msg) {
-            const t = document.getElementById("toast"); t.textContent = msg;
-            t.classList.add("show"); setTimeout(() => t.classList.remove("show"), 2500);
         }
+        function closeModal(e) { if (e.target === document.getElementById("modal")) closeModalDirect(); }
+        function closeModalDirect() { document.getElementById("modal").classList.remove("open"); document.body.style.overflow = ""; }
+        document.addEventListener("keydown", e => { if (e.key === "Escape") closeModalDirect(); });
+        render();
     </script>
 </body>
 
