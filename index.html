@@ -2,206 +2,1223 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hyperlocal Market</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hyperiocal Market — Buy &amp; Sell Locally</title>
+    <meta name="description"
+        content="Hyperiocal is a student-built hyperlocal secondhand marketplace. Buy and sell items near your campus using geolocation." />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
         :root {
-            --primary: #002f34;
-            --accent: #23e5db;
-            --bg: #f2f4f5;
-            --card: #ffffff;
-            --text: #000;
+            --g900: #064e3b;
+            --g700: #047857;
+            --g500: #10b981;
+            --g400: #34d399;
+            --g100: #d1fae5;
+            --g50: #ecfdf5;
+            --bg: #f0fdf4;
+            --surface: #fff;
+            --muted: #6b7280;
+            --text: #111827;
+            --border: #d1fae5;
+            --sh: 0 4px 24px rgba(16, 185, 129, .12);
+            --r: 16px
         }
 
-        body.dark {
-            --primary: #111;
-            --accent: #00c8b3;
-            --bg: #121212;
-            --card: #1e1e1e;
-            --text: #ffffff;
+        [data-theme=dark] {
+            --bg: #0a0f0d;
+            --surface: #111b16;
+            --text: #ecfdf5;
+            --muted: #9ca3af;
+            --border: #1a3028;
+            --sh: 0 4px 24px rgba(0, 0, 0, .4);
+            --g50: #0d2019;
+            --g100: #134a30
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
         }
 
         body {
+            font-family: 'Inter', sans-serif;
             background: var(--bg);
             color: var(--text);
-            transition: .3s;
+            transition: background .35s, color .35s;
+            min-height: 100vh
         }
 
+        a {
+            text-decoration: none
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--g400);
+            border-radius: 99px
+        }
+
+        /* NAVBAR */
         .navbar {
-            background: var(--primary);
+            background: var(--g900);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(6, 78, 59, .4)
         }
 
-        .navbar-brand {
-            color: var(--accent) !important;
+        .nav-inner {
+            max-width: 1280px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 24px;
+            gap: 12px;
+            flex-wrap: wrap
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--g400);
+            font-size: 1.3rem;
+            font-weight: 800
+        }
+
+        .brand-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--g500);
+            border-radius: 10px;
+            display: grid;
+            place-items: center;
+            color: #fff;
+            font-size: 1rem
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 9px 18px;
+            border-radius: 99px;
+            font-size: .875rem;
             font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all .25s;
+            text-decoration: none
         }
 
-        .btn-custom {
-            background: var(--accent);
+        .btn-ghost {
+            background: rgba(255, 255, 255, .1);
+            color: #fff
+        }
+
+        .btn-ghost:hover {
+            background: rgba(255, 255, 255, .2)
+        }
+
+        .btn-sell {
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(245, 158, 11, .35)
+        }
+
+        .btn-sell:hover {
+            transform: translateY(-1px)
+        }
+
+        .btn-icon {
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            background: rgba(255, 255, 255, .1);
+            color: #fff;
+            border-radius: 10px;
             border: none;
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            transition: all .25s
+        }
+
+        .btn-icon:hover {
+            background: rgba(255, 255, 255, .2)
+        }
+
+        .nav-chip {
+            background: rgba(52, 211, 153, .15);
+            color: var(--g400);
+            border: 1px solid rgba(52, 211, 153, .3);
+            padding: 5px 12px;
+            border-radius: 99px;
+            font-size: .75rem;
             font-weight: 600;
+            display: none
         }
 
-        .card {
-            background: var(--card);
-            border: none;
+        .nav-chip.show {
+            display: flex;
+            align-items: center;
+            gap: 5px
+        }
+
+        /* HERO */
+        .hero {
+            background: linear-gradient(135deg, var(--g900) 0%, var(--g700) 60%, var(--g500) 100%);
+            color: #fff;
+            text-align: center;
+            padding: 64px 24px 80px;
+            position: relative;
+            overflow: hidden
+        }
+
+        .hero h1 {
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            font-weight: 800;
+            letter-spacing: -.5px;
+            line-height: 1.2;
+            position: relative
+        }
+
+        .hero h1 span {
+            color: var(--g400)
+        }
+
+        .hero p {
+            margin: 12px auto 0;
+            max-width: 560px;
+            opacity: .85;
+            font-size: 1.05rem;
+            position: relative
+        }
+
+        .loc-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 18px;
+            background: rgba(255, 255, 255, .15);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, .25);
+            border-radius: 99px;
+            padding: 8px 20px;
+            font-size: .875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background .25s;
+            position: relative
+        }
+
+        .loc-chip:hover {
+            background: rgba(255, 255, 255, .22)
+        }
+
+        .loc-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--g400);
+            animation: pulse 1.5s infinite
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(52, 211, 153, .6)
+            }
+
+            50% {
+                box-shadow: 0 0 0 8px rgba(52, 211, 153, 0)
+            }
+        }
+
+        /* SEARCH */
+        .search-wrap {
+            max-width: 900px;
+            margin: -28px auto 0;
+            padding: 0 24px;
+            position: relative;
+            z-index: 10
+        }
+
+        .search-card {
+            background: var(--surface);
+            border-radius: var(--r);
+            padding: 18px;
+            box-shadow: var(--sh);
+            border: 1px solid var(--border);
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap
+        }
+
+        .search-iw {
+            flex: 1;
+            min-width: 180px;
+            position: relative
+        }
+
+        .search-iw i {
+            position: absolute;
+            left: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted)
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 11px 13px 11px 40px;
+            border: 2px solid var(--border);
             border-radius: 12px;
-            transition: .3s;
+            background: var(--bg);
+            color: var(--text);
+            font-size: .95rem;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: border .2s
+        }
+
+        .search-input:focus {
+            border-color: var(--g500)
+        }
+
+        .search-input::placeholder {
+            color: var(--muted)
+        }
+
+        .btn-search {
+            background: var(--g500);
+            color: #fff;
+            border: none;
+            padding: 11px 24px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: .9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            transition: all .25s
+        }
+
+        .btn-search:hover {
+            background: var(--g700);
+            transform: translateY(-1px)
+        }
+
+        /* STATS */
+        .stats-bar {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 24px;
+            margin-top: 8px
+        }
+
+        .stats-inner {
+            max-width: 1280px;
+            margin: auto;
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            flex-wrap: wrap;
+            gap: 12px
+        }
+
+        .stat-val {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--g500)
+        }
+
+        .stat-lbl {
+            font-size: .75rem;
+            color: var(--muted);
+            font-weight: 500
+        }
+
+        /* FILTERS */
+        .section {
+            max-width: 1280px;
+            margin: auto;
+            padding: 0 24px
+        }
+
+        .filters-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 24px 0 10px;
+            scrollbar-width: none
+        }
+
+        .filters-row::-webkit-scrollbar {
+            display: none
+        }
+
+        .f-label {
+            font-weight: 600;
+            font-size: .875rem;
+            white-space: nowrap;
+            color: var(--muted)
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--surface);
+            border: 2px solid var(--border);
+            color: var(--text);
+            padding: 7px 16px;
+            border-radius: 99px;
+            font-size: .82rem;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all .2s
+        }
+
+        .pill:hover {
+            border-color: var(--g500);
+            color: var(--g700)
+        }
+
+        .pill.active {
+            background: var(--g500);
+            border-color: var(--g500);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, .3)
+        }
+
+        /* HEADER */
+        .sec-hdr {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 0 14px;
+            flex-wrap: wrap;
+            gap: 8px
+        }
+
+        .sec-title {
+            font-size: 1.2rem;
+            font-weight: 700
+        }
+
+        .sec-title span {
+            color: var(--g500)
+        }
+
+        .sort-sel {
+            background: var(--surface);
+            border: 2px solid var(--border);
+            color: var(--text);
+            padding: 7px 13px;
+            border-radius: 10px;
+            font-size: .82rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            outline: none
+        }
+
+        /* GRID */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: 18px;
+            padding-bottom: 60px
+        }
+
+        /* SKELETON */
+        .skeleton-card {
+            background: var(--surface);
+            border-radius: var(--r);
+            border: 1px solid var(--border);
+            overflow: hidden
+        }
+
+        .skel {
+            background: linear-gradient(90deg, var(--border) 25%, var(--g50) 50%, var(--border) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.3s infinite;
+            border-radius: 8px
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 200% 0
+            }
+
+            100% {
+                background-position: -200% 0
+            }
+        }
+
+        .skel-img {
+            height: 180px;
+            border-radius: 0
+        }
+
+        .skel-body {
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px
+        }
+
+        .skel-line {
+            height: 14px
+        }
+
+        .skel-line.sm {
+            height: 10px;
+            width: 60%
+        }
+
+        .skel-line.btn {
+            height: 36px;
+            margin-top: 6px
+        }
+
+        /* CARD */
+        .card {
+            background: var(--surface);
+            border-radius: var(--r);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            transition: transform .3s, box-shadow .3s;
+            display: flex;
+            flex-direction: column
         }
 
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, .2);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(6, 78, 59, .15)
         }
 
-        .product-img {
-            height: 200px;
+        .card-img {
+            position: relative;
+            height: 180px;
+            background: var(--g50);
+            overflow: hidden
+        }
+
+        .card-img img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
+            transition: transform .4s
         }
 
-        .footer {
-            background: var(--primary);
-            color: white;
+        .card:hover .card-img img {
+            transform: scale(1.06)
+        }
+
+        .card-img .img-ph {
+            width: 100%;
+            height: 100%;
+            display: grid;
+            place-items: center;
+            font-size: 3.5rem
+        }
+
+        .dist-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(6, 78, 59, .85);
+            color: var(--g400);
+            font-size: .7rem;
+            font-weight: 700;
+            padding: 3px 9px;
+            border-radius: 99px;
+            border: 1px solid var(--g500)
+        }
+
+        .cat-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(255, 255, 255, .9);
+            color: var(--g700);
+            font-size: .67rem;
+            font-weight: 700;
+            padding: 3px 9px;
+            border-radius: 99px;
+            text-transform: uppercase;
+            letter-spacing: .4px
+        }
+
+        [data-theme=dark] .cat-badge {
+            background: rgba(17, 27, 22, .9);
+            color: var(--g400)
+        }
+
+        .wish-btn {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            background: #fff;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            color: #9ca3af;
+            font-size: .85rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, .15);
+            transition: all .2s
+        }
+
+        .wish-btn:hover,
+        .wish-btn.on {
+            color: #ef4444
+        }
+
+        [data-theme=dark] .wish-btn {
+            background: var(--g900);
+            color: var(--muted)
+        }
+
+        .card-body {
+            padding: 14px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 7px
+        }
+
+        .card-price {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--g700)
+        }
+
+        [data-theme=dark] .card-price {
+            color: var(--g400)
+        }
+
+        .card-name {
+            font-size: .93rem;
+            font-weight: 600;
+            line-height: 1.3;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+
+        .card-loc {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: .76rem;
+            color: var(--muted);
+            font-weight: 500
+        }
+
+        .card-loc i {
+            color: var(--g500);
+            font-size: .73rem
+        }
+
+        .btn-contact {
+            margin-top: auto;
+            width: 100%;
+            background: var(--g50);
+            color: var(--g700);
+            border: 2px solid var(--g100);
+            padding: 9px;
+            border-radius: 10px;
+            font-size: .83rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all .2s;
+            font-family: 'Inter', sans-serif
+        }
+
+        .btn-contact:hover {
+            background: var(--g500);
+            color: #fff;
+            border-color: var(--g500)
+        }
+
+        [data-theme=dark] .btn-contact {
+            background: var(--g900);
+            color: var(--g400);
+            border-color: var(--g900)
+        }
+
+        [data-theme=dark] .btn-contact:hover {
+            background: var(--g700);
+            color: #fff
+        }
+
+        /* EMPTY */
+        .empty {
+            text-align: center;
+            padding: 60px 20px;
+            grid-column: 1/-1
+        }
+
+        .empty i {
+            font-size: 3rem;
+            color: var(--g400);
+            display: block;
+            margin-bottom: 14px
+        }
+
+        .empty h3 {
+            font-weight: 700;
+            margin-bottom: 6px
+        }
+
+        .empty p {
+            color: var(--muted);
+            font-size: .9rem
+        }
+
+        /* MODAL */
+        .modal-ov {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .55);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            display: none;
+            place-items: center;
+            padding: 20px
+        }
+
+        .modal-ov.open {
+            display: grid;
+            animation: fadeIn .2s
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0
+            }
+        }
+
+        .modal {
+            background: var(--surface);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 440px;
+            width: 100%;
+            position: relative;
+            animation: slideUp .25s
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(24px);
+                opacity: 0
+            }
+        }
+
+        .m-close {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            background: var(--bg);
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            color: var(--muted);
+            font-size: 1rem;
+            display: grid;
+            place-items: center
+        }
+
+        .m-icon {
+            width: 52px;
+            height: 52px;
+            background: var(--g100);
+            border-radius: 14px;
+            display: grid;
+            place-items: center;
+            font-size: 1.5rem;
+            margin-bottom: 14px
+        }
+
+        .modal h2 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 4px
+        }
+
+        .modal .sub {
+            color: var(--muted);
+            font-size: .85rem;
+            margin-bottom: 18px
+        }
+
+        .info-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 14px;
+            margin-bottom: 8px
+        }
+
+        .info-row i {
+            color: var(--g500);
+            font-size: .95rem;
+            width: 16px
+        }
+
+        .info-lbl {
+            font-size: .73rem;
+            color: var(--muted);
+            font-weight: 500
+        }
+
+        .info-val {
+            font-weight: 600;
+            font-size: .9rem
+        }
+
+        .btn-wa {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            margin-top: 14px;
+            background: #25D366;
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            padding: 13px;
+            font-size: .92rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all .2s
+        }
+
+        .btn-wa:hover {
+            background: #128c50;
+            transform: translateY(-1px)
+        }
+
+        /* FAB */
+        .fab {
+            display: none;
+            position: fixed;
+            bottom: 22px;
+            right: 22px;
+            z-index: 900;
+            background: linear-gradient(135deg, #10b981, #047857);
+            color: #fff;
+            border: none;
+            border-radius: 99px;
+            padding: 13px 20px;
+            font-size: .9rem;
+            font-weight: 700;
+            box-shadow: 0 8px 24px rgba(16, 185, 129, .45);
+            cursor: pointer;
+            align-items: center;
+            gap: 7px
+        }
+
+        @media(max-width:640px) {
+            .fab {
+                display: flex
+            }
+        }
+
+        footer {
+            background: var(--g900);
+            color: rgba(255, 255, 255, .7);
+            text-align: center;
+            padding: 22px;
+            font-size: .84rem
+        }
+
+        footer span {
+            color: var(--g400);
+            font-weight: 600
+        }
+
+        /* TOAST */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: var(--g900);
+            color: #fff;
+            padding: 11px 22px;
+            border-radius: 99px;
+            font-size: .84rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, .25);
+            z-index: 3000;
+            opacity: 0;
+            transition: opacity .3s, transform .3s
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0)
         }
     </style>
 </head>
 
-<body>
+<body data-theme="light">
 
-    <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <a href="index.html" class="navbar-brand">Hyperlocal Market</a>
-            <div>
-                <button class="btn btn-light me-2" onclick="toggleDark()">🌙</button>
-                <a href="login.html" class="btn btn-light me-2">Login</a>
-                <a href="register.html" class="btn btn-custom me-2">Register</a>
-                <a href="add-product.html" class="btn btn-custom">Sell Item</a>
+    <nav class="navbar">
+        <div class="nav-inner">
+            <a href="index.html" class="brand">
+                <div class="brand-icon"><i class="fa-solid fa-leaf"></i></div>Hyperiocal
+            </a>
+            <div class="nav-actions">
+                <button class="btn-icon" onclick="toggleTheme()" id="themeBtn" title="Toggle theme"><i
+                        class="fa-solid fa-moon"></i></button>
+                <!-- Shown when NOT logged in -->
+                <a href="login.html" class="btn btn-ghost auth-guest"><i class="fa-solid fa-right-to-bracket"></i>
+                    Login</a>
+                <a href="register.html" class="btn btn-ghost auth-guest"><i class="fa-solid fa-user-plus"></i>
+                    Register</a>
+                <!-- Shown when logged in -->
+                <span class="nav-chip auth-user" id="navChip"><i class="fa-solid fa-circle-user"></i><span
+                        id="navName"></span></span>
+                <a href="my-products.html" class="btn btn-ghost auth-user" style="display:none"><i
+                        class="fa-solid fa-list"></i> My Listings</a>
+                <button class="btn btn-ghost auth-user" id="logoutBtn" style="display:none"><i
+                        class="fa-solid fa-right-from-bracket"></i> Logout</button>
+                <!-- Always visible -->
+                <a href="add-product.html" class="btn btn-sell"><i class="fa-solid fa-plus"></i> Sell Item</a>
             </div>
         </div>
     </nav>
 
-    <!-- LOCATION -->
-    <div class="container text-center mt-3">
-        <p id="userLocation">Detecting your location...</p>
-    </div>
-
-    <!-- SEARCH -->
-    <div class="container mt-3">
-        <div class="row mb-3">
-            <div class="col-md-9">
-                <input type="text" id="searchInput" class="form-control" placeholder="Search products...">
-            </div>
-            <div class="col-md-3">
-                <button class="btn btn-custom w-100" onclick="searchProduct()">Search</button>
-            </div>
+    <section class="hero">
+        <h1>Your Campus <span>Secondhand</span><br>Marketplace</h1>
+        <p>Buy &amp; sell preloved items from students near you. Sustainable. Local. Instant.</p>
+        <div class="loc-chip" onclick="retryLoc()">
+            <div class="loc-dot"></div>
+            <i class="fa-solid fa-location-dot"></i>
+            <span id="userLocation">Detecting your location…</span>
         </div>
+    </section>
 
-        <div class="text-center mb-4">
-            <button class="btn btn-outline-dark me-2" onclick="filterCategory('electronics')">Electronics</button>
-            <button class="btn btn-outline-dark me-2" onclick="filterCategory('furniture')">Furniture</button>
-            <button class="btn btn-outline-dark me-2" onclick="filterCategory('vehicles')">Vehicles</button>
-            <button class="btn btn-dark" onclick="filterCategory('all')">Show All</button>
+    <div class="search-wrap">
+        <div class="search-card">
+            <div class="search-iw">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="searchInput" class="search-input" placeholder="Search laptops, books, furniture…"
+                    oninput="renderProducts()" />
+            </div>
+            <button class="btn-search" onclick="renderProducts()"><i class="fa-solid fa-magnifying-glass"></i>
+                Search</button>
         </div>
     </div>
 
-    <!-- PRODUCTS -->
-    <div class="container">
-        <h4 class="mb-4">Latest Products Near You</h4>
-        <div class="row g-4" id="productContainer"></div>
+    <div class="stats-bar">
+        <div class="stats-inner">
+            <div>
+                <div class="stat-val" id="totalCount">—</div>
+                <div class="stat-lbl">Active Listings</div>
+            </div>
+            <div>
+                <div class="stat-val">18</div>
+                <div class="stat-lbl">Campuses Covered</div>
+            </div>
+            <div>
+                <div class="stat-val">4.8★</div>
+                <div class="stat-lbl">Avg Rating</div>
+            </div>
+            <div>
+                <div class="stat-val">₹0</div>
+                <div class="stat-lbl">Commission Fee</div>
+            </div>
+        </div>
     </div>
 
-    <!-- FOOTER -->
-    <footer class="footer text-center p-3 mt-5">
-        © 2026 Hyperlocal Market | Built by Shubham
-    </footer>
+    <div class="section">
+        <div class="filters-row" id="filterRow">
+            <span class="f-label">Filter:</span>
+            <button class="pill active" data-cat="all" onclick="setFilter(this)"><i class="fa-solid fa-border-all"></i>
+                All</button>
+            <button class="pill" data-cat="electronics" onclick="setFilter(this)"><i class="fa-solid fa-laptop"></i>
+                Electronics</button>
+            <button class="pill" data-cat="furniture" onclick="setFilter(this)"><i class="fa-solid fa-couch"></i>
+                Furniture</button>
+            <button class="pill" data-cat="books" onclick="setFilter(this)"><i class="fa-solid fa-book"></i>
+                Books</button>
+            <button class="pill" data-cat="clothing" onclick="setFilter(this)"><i class="fa-solid fa-shirt"></i>
+                Clothing</button>
+            <button class="pill" data-cat="vehicles" onclick="setFilter(this)"><i class="fa-solid fa-bicycle"></i>
+                Vehicles</button>
+            <button class="pill" data-cat="sports" onclick="setFilter(this)"><i class="fa-solid fa-dumbbell"></i>
+                Sports</button>
+        </div>
+        <div class="sec-hdr">
+            <h2 class="sec-title">Nearby Listings <span id="cnt"></span></h2>
+            <select class="sort-sel" id="sortSel" onchange="renderProducts()">
+                <option value="distance">Sort: Nearest First</option>
+                <option value="price-asc">Price: Low → High</option>
+                <option value="price-desc">Price: High → Low</option>
+                <option value="newest">Newest First</option>
+            </select>
+        </div>
+        <div class="grid" id="grid"></div>
+    </div>
 
-    <script>
+    <footer>© 2026 <span>Hyperiocal Market</span> · Built with 💚 by Shubham · Sustainable Local Commerce</footer>
+    <button class="fab" onclick="location.href='add-product.html'"><i class="fa-solid fa-plus"></i> Sell Item</button>
+    <div class="toast" id="toast"></div>
 
-        /* DARK MODE */
-        function toggleDark() {
-            document.body.classList.toggle("dark");
-        }
+    <!-- CONTACT MODAL -->
+    <div class="modal-ov" id="modal" onclick="closeModal(event)">
+        <div class="modal">
+            <button class="m-close" onclick="closeModalDirect()"><i class="fa-solid fa-xmark"></i></button>
+            <div class="m-icon">📞</div>
+            <h2 id="mName">Product</h2>
+            <p class="sub">Contact the seller for more details</p>
+            <div class="info-row"><i class="fa-solid fa-user"></i>
+                <div>
+                    <div class="info-lbl">Seller</div>
+                    <div class="info-val" id="mSeller"></div>
+                </div>
+            </div>
+            <div class="info-row"><i class="fa-solid fa-phone"></i>
+                <div>
+                    <div class="info-lbl">Phone</div>
+                    <div class="info-val" id="mPhone"></div>
+                </div>
+            </div>
+            <div class="info-row"><i class="fa-solid fa-location-dot"></i>
+                <div>
+                    <div class="info-lbl">Location</div>
+                    <div class="info-val" id="mLoc"></div>
+                </div>
+            </div>
+            <div class="info-row"><i class="fa-solid fa-tag"></i>
+                <div>
+                    <div class="info-lbl">Price</div>
+                    <div class="info-val" id="mPrice"></div>
+                </div>
+            </div>
+            <button class="btn-wa" id="waBtn"><i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp</button>
+        </div>
+    </div>
 
-        /* LOCATION */
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function (position) {
-                document.getElementById("userLocation").innerHTML =
-                    "📍 Your Current Location: Latitude " +
-                    position.coords.latitude.toFixed(4) +
-                    ", Longitude " +
-                    position.coords.longitude.toFixed(4);
-            });
-        } else {
-            document.getElementById("userLocation").innerHTML = "Location not supported.";
-        }
+    <script type="module">
+        import { auth, db } from "./firebase-config.js";
+        import { onAuthStateChanged, signOut }
+            from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { collection, onSnapshot, query, orderBy }
+            from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        /* PRODUCTS */
-        let products = [
-            { name: "Used Laptop", category: "electronics", image: "images/laptop.png" },
-            { name: "Gaming Laptop", category: "electronics", image: "images/gaming.png" },
-            { name: "Office Chair", category: "furniture", image: "images/chair.png" },
-            { name: "Study Table", category: "furniture", image: "images/table.png" },
-            { name: "Mountain Bicycle", category: "vehicles", image: "images/bicycle.png" },
-            { name: "Scooty", category: "vehicles", image: "images/scooty.png" },
-            { name: "iPhone 12", category: "electronics", image: "images/iphone.png" },
-            { name: "Samsung TV", category: "electronics", image: "images/tv.png" },
-            { name: "Wooden Bed", category: "furniture", image: "images/bed.png" },
-            { name: "Air Cooler", category: "electronics", image: "images/cooler.png" },
-            { name: "Books Set", category: "furniture", image: "images/books.png" },
-            { name: "Bluetooth Speaker", category: "electronics", image: "images/speaker.png" }
-        ];
+        // ─── THEME ───────────────────────────────────────────
+        window.toggleTheme = () => {
+            const b = document.body, dark = b.getAttribute("data-theme") === "dark";
+            b.setAttribute("data-theme", dark ? "light" : "dark");
+            document.getElementById("themeBtn").innerHTML = dark ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
+        };
 
-        let container = document.getElementById("productContainer");
-
-        products.forEach((item, index) => {
-            container.innerHTML += `
-<div class="col-md-3 col-sm-6 product-item" data-category="${item.category}">
-<div class="card">
-<img src="${item.image}" class="card-img-top product-img">
-<div class="card-body">
-<h6>₹${(index + 1) * 1500}</h6>
-<p>${item.name}</p>
-<p class="small text-muted">📍 Waluj, Sambhajinagar</p>
-<button class="btn btn-custom w-100">Contact Seller</button>
-</div>
-</div>
-</div>
-`;
+        // ─── AUTH STATE ──────────────────────────────────────
+        onAuthStateChanged(auth, user => {
+            document.querySelectorAll(".auth-guest").forEach(el => el.style.display = user ? "none" : "");
+            document.querySelectorAll(".auth-user").forEach(el => el.style.display = user ? "" : "none");
+            if (user) {
+                document.getElementById("navName").textContent = user.displayName || user.email;
+                document.getElementById("navChip").classList.add("show");
+            }
+        });
+        document.getElementById("logoutBtn").addEventListener("click", async () => {
+            await signOut(auth);
+            showToast("Logged out successfully.");
         });
 
-        /* SEARCH */
-        function searchProduct() {
-            let input = document.getElementById("searchInput").value.toLowerCase();
-            let items = document.getElementsByClassName("product-item");
+        // ─── GEOLOCATION ─────────────────────────────────────
+        let userLat = null, userLon = null;
+        window.retryLoc = () => { document.getElementById("userLocation").textContent = "Detecting…"; getLoc(); };
+        function getLoc() {
+            if (!navigator.geolocation) { document.getElementById("userLocation").textContent = "📍 Sambhajinagar, MH"; return; }
+            navigator.geolocation.getCurrentPosition(
+                p => {
+                    userLat = p.coords.latitude; userLon = p.coords.longitude;
+                    document.getElementById("userLocation").textContent = `Lat ${userLat.toFixed(4)}, Lon ${userLon.toFixed(4)} — Active`;
+                    renderProducts();
+                },
+                () => { document.getElementById("userLocation").textContent = "📍 Sambhajinagar, Maharashtra"; }
+            );
+        }
+        getLoc();
 
-            for (let i = 0; i < items.length; i++) {
-                let text = items[i].innerText.toLowerCase();
-                items[i].style.display = text.includes(input) ? "block" : "none";
-            }
+        // ─── HAVERSINE DISTANCE ───────────────────────────────
+        function haversine(lat1, lon1, lat2, lon2) {
+            const R = 6371, dLat = (lat2 - lat1) * Math.PI / 180, dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat / 2) ** 2 + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon / 2) ** 2;
+            return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         }
 
-        /* FILTER */
-        function filterCategory(category) {
-            let items = document.getElementsByClassName("product-item");
-
-            for (let i = 0; i < items.length; i++) {
-                let cat = items[i].getAttribute("data-category");
-
-                if (category === "all" || cat === category) {
-                    items[i].style.display = "block";
-                } else {
-                    items[i].style.display = "none";
-                }
-            }
+        // ─── SKELETON ─────────────────────────────────────────
+        function showSkeletons() {
+            document.getElementById("grid").innerHTML = Array(8).fill(`
+      <div class="skeleton-card">
+        <div class="skel skel-img"></div>
+        <div class="skel-body">
+          <div class="skel skel-line"></div>
+          <div class="skel skel-line sm"></div>
+          <div class="skel skel-line sm"></div>
+          <div class="skel skel-line btn"></div>
+        </div>
+      </div>`).join("");
         }
 
+        // ─── FIRESTORE REAL-TIME ──────────────────────────────
+        let allProducts = [];
+        const catEmoji = { electronics: "💻", furniture: "🪑", books: "📚", clothing: "👗", vehicles: "🚲", sports: "🏏", other: "📦" };
+        showSkeletons();
+
+        const q = query(collection(db, "products"), orderBy("createdAt", "desc"));
+        onSnapshot(q, snap => {
+            allProducts = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+            document.getElementById("totalCount").textContent = allProducts.length;
+            renderProducts();
+        }, err => {
+            document.getElementById("grid").innerHTML = `<div class="empty"><i class="fa-solid fa-triangle-exclamation"></i><h3>Could not load listings</h3><p>Check your Firebase config or connection.</p></div>`;
+            console.error(err);
+        });
+
+        // ─── FILTER & SORT ────────────────────────────────────
+        let activeCat = "all", wishlist = new Set();
+        window.setFilter = el => {
+            document.querySelectorAll(".pill").forEach(p => p.classList.remove("active"));
+            el.classList.add("active"); activeCat = el.getAttribute("data-cat"); renderProducts();
+        };
+
+        window.renderProducts = () => {
+            const q = document.getElementById("searchInput").value.toLowerCase();
+            const s = document.getElementById("sortSel").value;
+
+            let list = allProducts.filter(p => {
+                const catOk = activeCat === "all" || p.category === activeCat;
+                const txtOk = !q || (p.name || "").toLowerCase().includes(q) || (p.category || "").includes(q);
+                return catOk && txtOk;
+            });
+
+            // add computed distance
+            list = list.map(p => ({
+                ...p,
+                dist: (userLat && p.lat) ? haversine(userLat, userLon, p.lat, p.lon) : null
+            }));
+
+            if (s === "price-asc") list.sort((a, b) => a.price - b.price);
+            if (s === "price-desc") list.sort((a, b) => b.price - a.price);
+            if (s === "newest") list.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+            if (s === "distance") list.sort((a, b) => (a.dist ?? 999) - (b.dist ?? 999));
+
+            document.getElementById("cnt").textContent = `(${list.length})`;
+            const g = document.getElementById("grid");
+
+            if (!list.length) {
+                g.innerHTML = `<div class="empty"><i class="fa-solid fa-box-open"></i><h3>No listings found</h3><p>Try a different search or category.</p></div>`;
+                return;
+            }
+
+            g.innerHTML = list.map(p => {
+                const distTxt = p.dist != null ? `${p.dist.toFixed(1)} km` : "— km";
+                const img = p.imageUrl
+                    ? `<img src="${p.imageUrl}" alt="${p.name}" loading="lazy"/>`
+                    : `<div class="img-ph">${catEmoji[p.category] || "📦"}</div>`;
+                return `
+        <div class="card">
+          <div class="card-img">
+            ${img}
+            <span class="dist-badge"><i class="fa-solid fa-location-dot"></i> ${distTxt}</span>
+            <span class="cat-badge">${p.category || "other"}</span>
+            <button class="wish-btn ${wishlist.has(p.id) ? "on" : ""}" onclick="toggleWish(event,'${p.id}')">
+              <i class="fa-${wishlist.has(p.id) ? "solid" : "regular"} fa-heart"></i>
+            </button>
+          </div>
+          <div class="card-body">
+            <div class="card-price">₹${(p.price || 0).toLocaleString("en-IN")}</div>
+            <div class="card-name" title="${p.name}">${p.name}</div>
+            <div class="card-loc"><i class="fa-solid fa-location-dot"></i>${p.location || "—"}</div>
+            <button class="btn-contact" onclick='openModal(${JSON.stringify({ id: p.id, name: p.name, seller: p.sellerName, phone: p.sellerPhone, loc: p.location, price: p.price })})'>
+              <i class="fa-solid fa-phone"></i> Contact Seller
+            </button>
+          </div>
+        </div>`;
+            }).join("");
+        };
+
+        // ─── WISHLIST ────────────────────────────────────────
+        window.toggleWish = (e, id) => {
+            e.stopPropagation();
+            wishlist.has(id) ? wishlist.delete(id) : wishlist.add(id);
+            renderProducts();
+            showToast(wishlist.has(id) ? "❤️ Added to wishlist" : "Removed from wishlist");
+        };
+
+        // ─── CONTACT MODAL ───────────────────────────────────
+        window.openModal = (p) => {
+            document.getElementById("mName").textContent = p.name;
+            document.getElementById("mSeller").textContent = p.seller || "—";
+            document.getElementById("mPhone").textContent = p.phone || "Contact via WhatsApp";
+            document.getElementById("mLoc").textContent = p.loc || "—";
+            document.getElementById("mPrice").textContent = "₹" + (p.price || 0).toLocaleString("en-IN");
+            document.getElementById("waBtn").onclick = () =>
+                window.open(`https://wa.me/91${p.phone}?text=Hi, I'm interested in your "${p.name}" listed on Hyperiocal.`, "_blank");
+            document.getElementById("modal").classList.add("open");
+            document.body.style.overflow = "hidden";
+        };
+        window.closeModal = e => { if (e.target === document.getElementById("modal")) closeModalDirect(); };
+        window.closeModalDirect = () => { document.getElementById("modal").classList.remove("open"); document.body.style.overflow = ""; };
+        document.addEventListener("keydown", e => { if (e.key === "Escape") closeModalDirect(); });
+
+        // ─── TOAST ───────────────────────────────────────────
+        function showToast(msg) {
+            const t = document.getElementById("toast"); t.textContent = msg;
+            t.classList.add("show"); setTimeout(() => t.classList.remove("show"), 2500);
+        }
     </script>
-
 </body>
 
 </html>

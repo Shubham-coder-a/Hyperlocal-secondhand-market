@@ -2,86 +2,814 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Add Product - Hyperlocal Market</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sell Item — Hyperiocal Market</title>
+    <meta name="description"
+        content="Post your secondhand item on Hyperiocal and connect with nearby buyers instantly." />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        :root {
+            --g900: #064e3b;
+            --g700: #047857;
+            --g500: #10b981;
+            --g400: #34d399;
+            --g100: #d1fae5;
+            --g50: #ecfdf5;
+            --bg: #f0fdf4;
+            --surface: #fff;
+            --muted: #6b7280;
+            --text: #111827;
+            --border: #d1fae5;
+            --err: #ef4444;
+            --err-bg: #fef2f2
+        }
 
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding-bottom: 60px
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background: var(--g900);
+            padding: 14px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 20px rgba(6, 78, 59, .4)
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            color: var(--g400);
+            font-size: 1.15rem;
+            font-weight: 800;
+            text-decoration: none
+        }
+
+        .brand-icon {
+            width: 30px;
+            height: 30px;
+            background: var(--g500);
+            border-radius: 8px;
+            display: grid;
+            place-items: center;
+            color: #fff;
+            font-size: .85rem
+        }
+
+        .nav-user {
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        .nav-name {
+            color: rgba(255, 255, 255, .7);
+            font-size: .82rem;
+            font-weight: 500
+        }
+
+        .btn-nav {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 7px 14px;
+            border-radius: 99px;
+            font-size: .8rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            background: rgba(255, 255, 255, .1);
+            color: #fff;
+            transition: all .2s
+        }
+
+        .btn-nav:hover {
+            background: rgba(255, 255, 255, .2)
+        }
+
+        /* PAGE HEADER */
+        .page-header {
+            background: linear-gradient(135deg, var(--g900), var(--g700));
+            color: #fff;
+            text-align: center;
+            padding: 36px 24px
+        }
+
+        .page-header h1 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            margin-bottom: 6px
+        }
+
+        .page-header p {
+            opacity: .75;
+            font-size: .92rem
+        }
+
+        /* FORM CARD */
+        .form-wrap {
+            max-width: 720px;
+            margin: -24px auto 0;
+            padding: 0 20px
+        }
+
+        .form-card {
+            background: var(--surface);
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 8px 40px rgba(6, 78, 59, .1);
+            border: 1px solid var(--g100)
+        }
+
+        /* FORM ELEMENTS */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px
+        }
+
+        @media(max-width:580px) {
+            .form-row {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .form-group {
+            margin-bottom: 18px
+        }
+
+        .form-label {
+            display: block;
+            font-size: .82rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--text)
+        }
+
+        .form-label .req {
+            color: var(--err)
+        }
+
+        .input-wrap {
+            position: relative
+        }
+
+        .input-wrap i {
+            position: absolute;
+            left: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted);
+            font-size: .9rem;
+            pointer-events: none
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 11px 13px 11px 38px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            background: var(--bg);
+            color: var(--text);
+            font-size: .92rem;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: border .2s
+        }
+
+        .form-input:focus {
+            border-color: var(--g500)
+        }
+
+        .form-input.err-inp {
+            border-color: var(--err);
+            background: var(--err-bg)
+        }
+
+        .form-input::placeholder {
+            color: var(--muted)
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 11px 13px 11px 38px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            background: var(--bg);
+            color: var(--text);
+            font-size: .92rem;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: border .2s;
+            appearance: none;
+            cursor: pointer
+        }
+
+        .form-select:focus {
+            border-color: var(--g500)
+        }
+
+        .form-textarea {
+            width: 100%;
+            padding: 11px 13px 11px 38px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            background: var(--bg);
+            color: var(--text);
+            font-size: .92rem;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: border .2s;
+            resize: vertical;
+            min-height: 100px
+        }
+
+        .form-textarea:focus {
+            border-color: var(--g500)
+        }
+
+        .form-textarea::placeholder {
+            color: var(--muted)
+        }
+
+        .field-err {
+            color: var(--err);
+            font-size: .75rem;
+            margin-top: 4px;
+            display: none
+        }
+
+        .field-err.show {
+            display: block
+        }
+
+        /* IMAGE UPLOAD */
+        .img-upload-wrap {
+            border: 2px dashed var(--border);
+            border-radius: 14px;
+            background: var(--g50);
+            padding: 28px;
+            text-align: center;
+            cursor: pointer;
+            transition: border .25s
+        }
+
+        .img-upload-wrap:hover,
+        .img-upload-wrap.drag-over {
+            border-color: var(--g500);
+            background: rgba(16, 185, 129, .05)
+        }
+
+        .img-upload-wrap input[type=file] {
+            display: none
+        }
+
+        .upload-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--g400)
+        }
+
+        .upload-txt {
+            font-size: .85rem;
+            color: var(--muted);
+            line-height: 1.5
+        }
+
+        .upload-txt strong {
+            color: var(--g700);
+            cursor: pointer
+        }
+
+        .img-preview {
+            display: none;
+            margin-top: 12px
+        }
+
+        .img-preview img {
+            width: 100%;
+            border-radius: 10px;
+            max-height: 200px;
+            object-fit: cover
+        }
+
+        .img-preview .remove-img {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--err);
+            font-size: .78rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 6px;
+            background: none;
+            border: none;
+            font-family: 'Inter', sans-serif
+        }
+
+        /* PROGRESS */
+        .progress-wrap {
+            margin-top: 10px;
+            display: none
+        }
+
+        .progress-wrap.show {
+            display: block
+        }
+
+        .progress-bar-bg {
+            background: var(--border);
+            border-radius: 99px;
+            height: 6px;
+            overflow: hidden
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, var(--g500), var(--g400));
+            height: 100%;
+            border-radius: 99px;
+            transition: width .3s;
+            width: 0%
+        }
+
+        .progress-lbl {
+            font-size: .75rem;
+            color: var(--muted);
+            margin-top: 4px;
+            text-align: right
+        }
+
+        /* LOCATION */
+        .loc-detect-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--g50);
+            border: 1px solid var(--g100);
+            color: var(--g700);
+            padding: 7px 14px;
+            border-radius: 99px;
+            font-size: .78rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 6px;
+            transition: all .2s
+        }
+
+        .loc-detect-btn:hover {
+            background: var(--g100)
+        }
+
+        /* ALERT */
+        .alert {
+            padding: 12px 14px;
+            border-radius: 10px;
+            font-size: .83rem;
+            font-weight: 500;
+            margin-bottom: 16px;
+            display: none;
+            align-items: center;
+            gap: 8px
+        }
+
+        .alert.show {
+            display: flex
+        }
+
+        .alert-err {
+            background: var(--err-bg);
+            color: var(--err);
+            border: 1px solid rgba(239, 68, 68, .25)
+        }
+
+        .alert-ok {
+            background: var(--g50);
+            color: var(--g700);
+            border: 1px solid var(--g100)
+        }
+
+        /* SUBMIT */
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--g500), var(--g700));
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: .95rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all .25s;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, .3);
+            margin-top: 8px
+        }
+
+        .btn-submit:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, .4)
+        }
+
+        .btn-submit:disabled {
+            opacity: .65;
+            cursor: not-allowed;
+            transform: none
+        }
+
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, .4);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin .6s linear infinite;
+            display: none
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        .spinner.show {
+            display: block
+        }
+
+        /* SECTION TITLE */
+        .section-lbl {
+            font-size: .75rem;
+            font-weight: 700;
+            color: var(--g700);
+            text-transform: uppercase;
+            letter-spacing: .6px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px
+        }
+
+        .divider {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 22px 0
+        }
+    </style>
 </head>
 
 <body>
 
-    <!-- 🔷 Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="index.html">Hyperlocal Market</a>
+    <nav class="navbar">
+        <a href="index.html" class="brand">
+            <div class="brand-icon"><i class="fa-solid fa-leaf"></i></div>Hyperiocal
+        </a>
+        <div class="nav-user">
+            <span class="nav-name" id="navName"></span>
+            <a href="my-products.html" class="btn-nav"><i class="fa-solid fa-list"></i> My Listings</a>
+            <button class="btn-nav" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
         </div>
     </nav>
 
-    <!-- 📦 Add Product Form -->
-    <div class="container mt-5 mb-5">
-        <div class="card shadow p-4">
-            <h3 class="mb-4 text-center">Post Your Product</h3>
+    <div class="page-header">
+        <h1>📦 Post Your Item</h1>
+        <p>Fill in the details below and reach buyers near you instantly</p>
+    </div>
 
-            <form>
+    <div class="form-wrap">
+        <div class="form-card">
 
-                <!-- Product Title -->
-                <div class="mb-3">
-                    <label class="form-label">Product Title</label>
-                    <input type="text" class="form-control" placeholder="Enter product name">
+            <div class="alert alert-err" id="alertErr"><i class="fa-solid fa-circle-exclamation"></i><span
+                    id="alertErrMsg"></span></div>
+            <div class="alert alert-ok" id="alertOk"><i class="fa-solid fa-circle-check"></i><span
+                    id="alertOkMsg"></span></div>
+
+            <form id="productForm" novalidate>
+
+                <!-- BASIC INFO -->
+                <div class="section-lbl"><i class="fa-solid fa-tag"></i> Product Details</div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="pName">Product Name <span class="req">*</span></label>
+                        <div class="input-wrap">
+                            <i class="fa-solid fa-box"></i>
+                            <input id="pName" type="text" class="form-input" placeholder="e.g. Dell Laptop i5" />
+                        </div>
+                        <div class="field-err" id="nameErr">Please enter a product name.</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="pPrice">Price (₹) <span class="req">*</span></label>
+                        <div class="input-wrap">
+                            <i class="fa-solid fa-indian-rupee-sign"></i>
+                            <input id="pPrice" type="number" class="form-input" placeholder="e.g. 8500" min="1" />
+                        </div>
+                        <div class="field-err" id="priceErr">Enter a valid price.</div>
+                    </div>
                 </div>
 
-                <!-- Price -->
-                <div class="mb-3">
-                    <label class="form-label">Price (₹)</label>
-                    <input type="number" class="form-control" placeholder="Enter price">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="pCat">Category <span class="req">*</span></label>
+                        <div class="input-wrap">
+                            <i class="fa-solid fa-layer-group"></i>
+                            <select id="pCat" class="form-select">
+                                <option value="">Select Category</option>
+                                <option value="electronics">📱 Electronics</option>
+                                <option value="furniture">🪑 Furniture</option>
+                                <option value="books">📚 Books</option>
+                                <option value="clothing">👗 Clothing</option>
+                                <option value="vehicles">🚲 Vehicles</option>
+                                <option value="sports">🏏 Sports</option>
+                                <option value="other">📦 Other</option>
+                            </select>
+                        </div>
+                        <div class="field-err" id="catErr">Please select a category.</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="pCondition">Condition</label>
+                        <div class="input-wrap">
+                            <i class="fa-solid fa-star-half-stroke"></i>
+                            <select id="pCondition" class="form-select">
+                                <option value="like-new">Like New</option>
+                                <option value="good" selected>Good</option>
+                                <option value="fair">Fair</option>
+                                <option value="poor">For Parts</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Category -->
-                <div class="mb-3">
-                    <label class="form-label">Category</label>
-                    <select class="form-select">
-                        <option>Select Category</option>
-                        <option>Electronics</option>
-                        <option>Furniture</option>
-                        <option>Vehicles</option>
-                        <option>Books</option>
-                        <option>Others</option>
-                    </select>
+                <div class="form-group">
+                    <label class="form-label" for="pDesc">Description <span class="req">*</span></label>
+                    <div class="input-wrap">
+                        <i class="fa-solid fa-align-left" style="top:16px;transform:none"></i>
+                        <textarea id="pDesc" class="form-textarea"
+                            placeholder="Describe your item — age, condition, reason for selling, what's included…"></textarea>
+                    </div>
+                    <div class="field-err" id="descErr">Please add a short description.</div>
                 </div>
 
-                <!-- Image URL -->
-                <div class="mb-3">
-                    <label class="form-label">Product Image URL</label>
-                    <input type="text" class="form-control" placeholder="Paste image link">
+                <hr class="divider" />
+
+                <!-- IMAGE -->
+                <div class="section-lbl"><i class="fa-solid fa-image"></i> Product Photo</div>
+                <div class="form-group">
+                    <div class="img-upload-wrap" id="dropZone" onclick="document.getElementById('imgFile').click()"
+                        ondragover="e=>e.preventDefault()" ondrop="handleDrop(event)">
+                        <input type="file" id="imgFile" accept="image/*" onchange="previewImg(this)" />
+                        <div class="upload-icon">📷</div>
+                        <div class="upload-txt">
+                            Drag & drop or <strong
+                                onclick="event.stopPropagation();document.getElementById('imgFile').click()">browse</strong>
+                            to upload<br>
+                            <span style="font-size:.75rem">JPEG, PNG, WEBP — max 5 MB</span>
+                        </div>
+                    </div>
+                    <div class="img-preview" id="imgPreview">
+                        <img id="previewImg" src="" alt="Preview" />
+                        <button type="button" class="remove-img" onclick="removeImg()"><i class="fa-solid fa-trash"></i>
+                            Remove photo</button>
+                    </div>
+                    <div class="field-err" id="imgErr">Please upload a product photo.</div>
+                    <div class="progress-wrap" id="progressWrap">
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar" id="progressBar"></div>
+                        </div>
+                        <div class="progress-lbl" id="progressLbl">Uploading…</div>
+                    </div>
                 </div>
 
-                <!-- Description -->
-                <div class="mb-3">
-                    <label class="form-label">Description</label>
-                    <textarea class="form-control" rows="4" placeholder="Write product details..."></textarea>
-                </div>
+                <hr class="divider" />
 
-                <!-- Location -->
-                <div class="mb-3">
-                    <label class="form-label">Location</label>
-                    <input type="text" class="form-control" placeholder="Enter your area/location">
+                <!-- LOCATION -->
+                <div class="section-lbl"><i class="fa-solid fa-location-dot"></i> Location</div>
+                <div class="form-group">
+                    <label class="form-label" for="pLoc">Area / Neighbourhood <span class="req">*</span></label>
+                    <div class="input-wrap">
+                        <i class="fa-solid fa-map-pin"></i>
+                        <input id="pLoc" type="text" class="form-input" placeholder="e.g. Waluj, Sambhajinagar" />
+                    </div>
+                    <div class="field-err" id="locErr">Please enter your area.</div>
+                    <button type="button" class="loc-detect-btn" onclick="detectLocation()">
+                        <i class="fa-solid fa-location-crosshairs"></i> Auto-detect my location
+                    </button>
                 </div>
+                <!-- Hidden lat/lon populated by geolocation -->
+                <input type="hidden" id="pLat" value="" />
+                <input type="hidden" id="pLon" value="" />
 
-                <!-- Submit Button -->
-                <button type="submit" class="btn btn-success w-100">Post Product</button>
+                <button type="submit" class="btn-submit" id="submitBtn">
+                    <div class="spinner" id="spinner"></div>
+                    <span id="btnTxt"><i class="fa-solid fa-paper-plane"></i> Post Product</span>
+                </button>
 
             </form>
         </div>
     </div>
 
-    <!-- 🔻 Footer -->
-    <footer class="bg-success text-white text-center p-3">
-        © 2026 Hyperlocal Secondhand Market | Built by Shubham
-    </footer>
+    <script type="module">
+        import { auth, db, storage } from "./firebase-config.js";
+        import { onAuthStateChanged, signOut }
+            from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { collection, addDoc, serverTimestamp }
+            from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { ref, uploadBytesResumable, getDownloadURL }
+            from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+        import { doc, getDoc }
+            from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
+        // ─── AUTH GUARD ──────────────────────────────────────
+        let currentUser = null, userProfile = null;
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) { window.location.href = "login.html"; return; }
+            currentUser = user;
+            document.getElementById("navName").textContent = user.displayName || user.email;
+            // load phone from Firestore profile
+            try {
+                const snap = await getDoc(doc(db, "users", user.uid));
+                if (snap.exists()) userProfile = snap.data();
+            } catch (e) { }
+        });
+
+        // ─── LOGOUT ──────────────────────────────────────────
+        document.getElementById("logoutBtn").addEventListener("click", async () => {
+            await signOut(auth);
+            window.location.href = "index.html";
+        });
+
+        // ─── IMAGE PREVIEW ────────────────────────────────────
+        window.previewImg = (inp) => {
+            const file = inp.files[0];
+            if (!file) return;
+            if (file.size > 5 * 1024 * 1024) { showErr("Image must be under 5 MB."); inp.value = ""; return; }
+            const url = URL.createObjectURL(file);
+            document.getElementById("previewImg").src = url;
+            document.getElementById("imgPreview").style.display = "block";
+        };
+        window.removeImg = () => {
+            document.getElementById("imgFile").value = "";
+            document.getElementById("imgPreview").style.display = "none";
+            document.getElementById("previewImg").src = "";
+        };
+
+        // ─── DRAG DROP ────────────────────────────────────────
+        const dz = document.getElementById("dropZone");
+        dz.addEventListener("dragover", e => { e.preventDefault(); dz.classList.add("drag-over"); });
+        dz.addEventListener("dragleave", () => dz.classList.remove("drag-over"));
+        dz.addEventListener("drop", e => {
+            e.preventDefault(); dz.classList.remove("drag-over");
+            const file = e.dataTransfer.files[0];
+            if (file && file.type.startsWith("image/")) {
+                const inp = document.getElementById("imgFile");
+                const dt = new DataTransfer(); dt.items.add(file); inp.files = dt.files;
+                window.previewImg(inp);
+            }
+        });
+
+        // ─── GEOLOCATION ─────────────────────────────────────
+        window.detectLocation = () => {
+            const btn = document.querySelector(".loc-detect-btn");
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Detecting…';
+            if (!navigator.geolocation) { btn.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i> Not supported'; return; }
+            navigator.geolocation.getCurrentPosition(
+                pos => {
+                    document.getElementById("pLat").value = pos.coords.latitude;
+                    document.getElementById("pLon").value = pos.coords.longitude;
+                    btn.innerHTML = '<i class="fa-solid fa-circle-check"></i> Location Captured!';
+                    btn.style.color = "var(--g700)";
+                },
+                () => {
+                    btn.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i> Could not detect location';
+                }
+            );
+        };
+
+        // ─── ALERTS ──────────────────────────────────────────
+        function showErr(msg) {
+            document.getElementById("alertOk").classList.remove("show");
+            document.getElementById("alertErrMsg").textContent = msg;
+            document.getElementById("alertErr").classList.add("show");
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+        function showOk(msg) {
+            document.getElementById("alertErr").classList.remove("show");
+            document.getElementById("alertOkMsg").textContent = msg;
+            document.getElementById("alertOk").classList.add("show");
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+        function setLoading(on) {
+            document.getElementById("spinner").classList.toggle("show", on);
+            document.getElementById("btnTxt").style.display = on ? "none" : "flex";
+            document.getElementById("submitBtn").disabled = on;
+        }
+        function fieldE(id, show) { document.getElementById(id).classList.toggle("show", show); }
+
+        // ─── FORM SUBMIT ──────────────────────────────────────
+        document.getElementById("productForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            if (!currentUser) { window.location.href = "login.html"; return; }
+
+            // Clear errors
+            ["nameErr", "priceErr", "catErr", "descErr", "imgErr", "locErr"].forEach(id => fieldE(id, false));
+            document.getElementById("alertErr").classList.remove("show");
+
+            const name = document.getElementById("pName").value.trim();
+            const price = parseFloat(document.getElementById("pPrice").value);
+            const cat = document.getElementById("pCat").value;
+            const cond = document.getElementById("pCondition").value;
+            const desc = document.getElementById("pDesc").value.trim();
+            const loc = document.getElementById("pLoc").value.trim();
+            const lat = parseFloat(document.getElementById("pLat").value) || null;
+            const lon = parseFloat(document.getElementById("pLon").value) || null;
+            const file = document.getElementById("imgFile").files[0];
+
+            let valid = true;
+            if (!name) { fieldE("nameErr", true); valid = false; }
+            if (!price || price < 1) { fieldE("priceErr", true); valid = false; }
+            if (!cat) { fieldE("catErr", true); valid = false; }
+            if (!desc) { fieldE("descErr", true); valid = false; }
+            if (!file) { fieldE("imgErr", true); valid = false; }
+            if (!loc) { fieldE("locErr", true); valid = false; }
+            if (!valid) { showErr("Please fix the errors above."); return; }
+
+            setLoading(true);
+
+            try {
+                // 1. Upload image to Firebase Storage
+                const imgRef = ref(storage, `products/${currentUser.uid}/${Date.now()}_${file.name}`);
+                const uploadTask = uploadBytesResumable(imgRef, file);
+                const progWrap = document.getElementById("progressWrap");
+                const progBar = document.getElementById("progressBar");
+                const progLbl = document.getElementById("progressLbl");
+                progWrap.classList.add("show");
+
+                const imageUrl = await new Promise((resolve, reject) => {
+                    uploadTask.on("state_changed",
+                        snap => {
+                            const pct = Math.round((snap.bytesTransferred / snap.totalBytes) * 100);
+                            progBar.style.width = pct + "%";
+                            progLbl.textContent = `Uploading image… ${pct}%`;
+                        },
+                        err => reject(err),
+                        async () => {
+                            const url = await getDownloadURL(uploadTask.snapshot.ref);
+                            resolve(url);
+                        }
+                    );
+                });
+
+                progLbl.textContent = "Upload complete! Saving product…";
+
+                // 2. Save product to Firestore
+                await addDoc(collection(db, "products"), {
+                    name, price, category: cat, condition: cond,
+                    description: desc, location: loc,
+                    lat: lat || 19.8762, // fallback: Sambhajinagar coords
+                    lon: lon || 75.3433,
+                    imageUrl,
+                    sellerId: currentUser.uid,
+                    sellerName: currentUser.displayName || "Seller",
+                    sellerPhone: userProfile?.phone || "",
+                    createdAt: serverTimestamp()
+                });
+
+                progWrap.classList.remove("show");
+                showOk("🎉 Product posted successfully! Redirecting…");
+                document.getElementById("productForm").reset();
+                window.removeImg();
+                setTimeout(() => { window.location.href = "index.html"; }, 1800);
+
+            } catch (err) {
+                showErr("Error: " + err.message);
+                setLoading(false);
+                document.getElementById("progressWrap").classList.remove("show");
+            }
+        });
+    </script>
 </body>
 
 </html>
