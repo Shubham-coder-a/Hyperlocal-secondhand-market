@@ -58,6 +58,13 @@ Hyperlocal Market solves this by:
 
 ---
 
+## 🎥 Project Demo Video
+
+Watch the working demo here:
+https://drive.google.com/file/d/190oE2RcevTJJOnm0aRgvUrahtlTR0G_9/view
+
+---
+
 ## 🏗️ Tech Stack
 
 **Frontend**
