@@ -1,5 +1,5 @@
 # Hyperlocal-secondhand-market  🌿 Hyperlocal Secondhand Market
-A hyperiocal marketplace for buying and selling secondhand items.
+A hyperlocal marketplace for buying and selling secondhand items.
 # 
 
 A modern, student-focused hyperlocal marketplace for buying and selling secondhand items within nearby campus or local areas.
