@@ -1,4 +1,4 @@
-# Hyperiocal-secondhand-market  🌿 Hyperlocal Secondhand Market
+# Hyperlocal-secondhand-market  🌿 Hyperlocal Secondhand Market
 A hyperiocal marketplace for buying and selling secondhand items.
 # 
 
